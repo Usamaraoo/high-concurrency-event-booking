@@ -11,8 +11,10 @@ export const initializeDataSource = async () => {
         await redisClient.connect();
         console.log('🔌 Redis connected');
         app.listen(envConfig.server.port, () => {
-            console.log(`Server is running on port ${envConfig.server.port}`);
+            console.log(`Port: ${envConfig.server.port}`);
+            console.log(`Server: running on ${envConfig.server.base_url}:${envConfig.server.port} `)
             console.log(`health check /health`);
+            console.log(`Api Documentation /api-docs`);
         });
 
     } catch (error) {

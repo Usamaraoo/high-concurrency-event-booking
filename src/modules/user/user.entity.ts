@@ -33,4 +33,7 @@ export class User {
 
   @OneToMany(() => Booking, (booking) => booking!.user)
   bookings!: Booking[];
+
+  @Column({type:"text"})
+  password!: string
 }

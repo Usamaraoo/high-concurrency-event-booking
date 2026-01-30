@@ -4,12 +4,17 @@ dotenv.config();
 
 interface Config {
   server: {
+    env: string;
     port: number;
+    base_url: string;
+    jwt_secret:string;
+    salt_round:number
   }
   seed: {
     user: {
       username: string;
       email: string;
+      password:string;
     }
   }
   database: {
@@ -22,6 +27,7 @@ interface Config {
   redis: {
     host: string;
   }
+ 
 }
 
 const getEnvVar = (key: string): string => {
@@ -35,7 +41,11 @@ const getEnvVar = (key: string): string => {
 
 const envConfig: Config = {
   server: {
+    env: getEnvVar('NODE_ENV'),
+    base_url: getEnvVar('BASE_URL'),
     port: Number(getEnvVar('PORT')) || 3000,
+    jwt_secret: getEnvVar('JWT_SECRET'),
+    salt_round: Number(getEnvVar('SALT_ROUND'))
   },
   database: {
     username: getEnvVar('DB_USERNAME'),
@@ -51,6 +61,7 @@ const envConfig: Config = {
     user:{
       username: getEnvVar('SEED_USERNAME'),
       email: getEnvVar('SEED_USER_EMAIL'),
+      password: getEnvVar('SEED_USER_PASSWORD'),
     }
   }
 };

@@ -1,2 +1,29 @@
-npx typeorm-ts-node-commonjs migration:generate src/migrations/InitSchema -d src/config/db.ts
-npx typeorm-ts-node-commonjs migration:run -d src/config/db.ts
+todos
+- User auth
+    - signUp [Done]
+    - login [Done]
+     - create jwt 
+     - log request (calculate time)
+     - add middleware to check jwt
+- booking
+    - reserve seats
+     - redis lua script for atomic update of seats and reservation token (TTL)
+     - create booking with reservation and pending status, token and return reservation token
+- Payment
+ - extend reservation token
+ - check payment intent in booking table if exists return intent
+ - if not create payment intent, add metadata with reservation token, booking id to it
+ - add payment intent id to booking table
+ - return payment intent
+
+- Web Hook
+ - check for events
+ - check reservation token or booking id check the status of the booking if paid ignore it
+ - Update the booking to run transaction ( update event seats, update booking status, delete reservation token from the redis)
+
+- Queue
+    once the payment is done run queue to send user email
+
+- Scenarios 
+ - let the reservation token expire on expire the reserved seat should return to original state
+ - complete the booking and we delete the reservation token see if redis status updates or not
