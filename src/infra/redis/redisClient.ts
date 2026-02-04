@@ -1,5 +1,5 @@
 import { createClient } from 'redis';
-import envConfig from './envConfig';
+import envConfig from '../../config/envConfig';
 
 export const redisClient = createClient({
   url: envConfig.redis.host,

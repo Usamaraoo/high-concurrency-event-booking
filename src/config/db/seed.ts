@@ -1,6 +1,6 @@
 import { seedEvents } from "../../modules/event/event.service";
 import { seedUser } from "../../modules/user/user.service"
-import { redisClient } from "../redis";
+import { redisClient } from "../../infra/redis/redisClient";
 import { myDataSource } from "./db";
 
 export const seedDb = async () => {

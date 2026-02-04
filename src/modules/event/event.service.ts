@@ -1,5 +1,5 @@
-import { redisClient } from "../../config/redis"
 import { EVENTS } from "../../constant/event"
+import { redisClient } from "../../infra/redis"
 import { EventRepository } from "./event.repository"
 import { CreateEventOutput } from "./event.schema"
 

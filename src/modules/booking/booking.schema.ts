@@ -5,15 +5,6 @@ export const reserveSeatsSchema = z
     eventId: z
       .string()
       .uuid("Invalid event ID format"),
-    name: z
-      .string()
-      .trim()
-      .min(2, "Name must be at least 2 characters")
-      .max(100, "Name is too long"),
-    email: z
-      .string()
-      .email("Invalid email address")
-      .toLowerCase(),
     seats: z
       .number()
       .int()

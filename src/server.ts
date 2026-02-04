@@ -1,7 +1,7 @@
 import envConfig from './config/envConfig';
 import app from './app';
 import { myDataSource } from './config/db/db';
-import { redisClient } from './config/redis';
+import { redisClient, startRedisExpirySubscriber } from './infra/redis';
 
 
 export const initializeDataSource = async () => {
@@ -10,6 +10,8 @@ export const initializeDataSource = async () => {
         console.log("🔌 Database connected")
         await redisClient.connect();
         console.log('🔌 Redis connected');
+        await startRedisExpirySubscriber();
+        console.log('Redis worker started')
         app.listen(envConfig.server.port, () => {
             console.log(`Port: ${envConfig.server.port}`);
             console.log(`Server: running on ${envConfig.server.base_url}:${envConfig.server.port} `)

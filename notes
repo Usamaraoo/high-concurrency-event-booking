@@ -2,13 +2,19 @@ todos
 - User auth
     - signUp [Done]
     - login [Done]
-     - create jwt 
-     - log request (calculate time)
-     - add middleware to check jwt
+     - create jwt  [Done]
+     - log request [Done] (calculate time) [todo]
+     - add middleware to check jwt [Done]
 - booking
-    - reserve seats
-     - redis lua script for atomic update of seats and reservation token (TTL)
-     - create booking with reservation and pending status, token and return reservation token
+    - check if booking exists with current user
+    - if yes
+        -  return the reservation token, send reservation token dont run lua to generate new token
+        - redis login ( if resevation token TTL expires return the seat count to original count )
+    
+    else
+        - generate reservation token
+        - run lua script to add reservation token to redis and update seats count by decreasing the seats
+        - create booking with reservation and pending status, token and return reservation token
 - Payment
  - extend reservation token
  - check payment intent in booking table if exists return intent
