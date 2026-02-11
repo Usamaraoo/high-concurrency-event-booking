@@ -7,7 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { User } from '../user/user.entity'; // Double check if this path is correct
+import { User } from '../user/user.entity';
 import { Event } from '../event';
 
 export enum BookingStatus {
@@ -18,37 +18,52 @@ export enum BookingStatus {
 }
 
 @Entity('bookings')
-@Index(['user_id'])
-@Index(['event_id'])
+@Index(['user_id']) // Now this works!
+@Index(['event_id']) // Now this works!
 @Index(['status'])
 @Index(['expires_at'])
 @Index(['reservation_token'], { unique: true })
-@Index(['payment_intent_id'], { unique: true, where: `"payment_intent_id" IS NOT NULL` })
-@Index(['payment_id'], { unique: true, where: `"payment_id" IS NOT NULL` })
+@Index(['payment_intent_id'], {
+  unique: true,
+  where: `"payment_intent_id" IS NOT NULL`,
+})
+@Index(['payment_id'], {
+  unique: true,
+  where: `"payment_id" IS NOT NULL`,
+})
 export class Booking {
-  @PrimaryGeneratedColumn('increment')
-  id!: number;
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
 
-  // -------- RELATIONS --------
+  // -------- FOREIGN KEY COLUMNS (EASY STORAGE) --------
 
   @Column({ type: 'uuid' })
   user_id!: string;
 
-  @ManyToOne(() => User, (user) => user.bookings, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user_id' })
-  user!: User;
-
   @Column({ type: 'uuid' })
   event_id!: string;
 
-  @ManyToOne(() => Event, (event) => event.bookings, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'event_id' })
+  // -------- RELATIONS (FOR JOINING) --------
+
+  @ManyToOne(() => User, (user) => user.bookings, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'user_id' }) // Maps the relation to the column above
+  user!: User;
+
+  @ManyToOne(() => Event, (event) => event.bookings, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'event_id' }) // Maps the relation to the column above
   event!: Event;
 
   // -------- DATA --------
 
   @Column({ type: 'int', nullable: false })
   seats!: number;
+
+  @Column({ type: 'int', nullable: false })
+  price!: number;
 
   @Column({
     type: 'enum',
@@ -65,6 +80,9 @@ export class Booking {
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   payment_id!: string | null;
+
+  @Column({ type: 'varchar', length: 512, nullable: true })
+  payment_intent_client_secret!: string | null;
 
   @Column({ type: 'varchar', length: 64, unique: true })
   reservation_token!: string;

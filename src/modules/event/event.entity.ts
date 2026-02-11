@@ -14,7 +14,7 @@ import { Booking } from '../booking';
 export class Event {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
-  @Column({ type: 'varchar', length: 255, nullable: false,unique:true })
+  @Column({ type: 'varchar', length: 255, nullable: false, unique: true })
   name!: string;
 
   // -------- RELATIONS --------
@@ -22,7 +22,8 @@ export class Event {
   @Column({ type: 'uuid' })
   user_id!: string;
 
-
+  @Column({ type: 'int', nullable: false })
+  price_cents!: number;
 
   @OneToMany(() => Booking, (booking) => booking.event)
   bookings!: Booking[];

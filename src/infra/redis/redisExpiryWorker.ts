@@ -1,4 +1,5 @@
-    import { redisClient } from "./index";
+    import { BookingRepository } from "../../modules/booking/booking.repository";
+import { redisClient } from "./index";
     import { restoreSeatLua } from "./scripts";
 
     export async function startRedisExpirySubscriber() {
@@ -30,8 +31,9 @@
             keys: [eventKey],        // This becomes KEYS[1]
             arguments: [seats]       // This becomes ARGV[1]
         });
-        
         console.log(`Successfully restored. New count: ${result}`);
+         await BookingRepository.delete({ event_id: eventId });
+        console.log('deleted booking from db');
     } catch (err: any) {
         // This will now show the detailed "LUA_ERR" we added in the script
         console.error("Failed to restore seats:", err.message);

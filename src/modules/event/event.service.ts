@@ -26,3 +26,7 @@ export const seedEvents = async (user_id: string) => {
     );
     await Promise.all(cachePromises);
 }
+
+export const getEventById = async (id: string) => {
+    return await EventRepository.findOneBy({ id });
+}

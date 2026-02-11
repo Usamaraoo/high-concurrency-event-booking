@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createEventController, getEventsController } from "./event.controller";
+import { createEventController, getEventsController, getEventController } from "./event.controller";
 import { validate } from "../../middleware/validate";
 import { createEventSchema } from "./event.schema";
 
@@ -34,5 +34,26 @@ router.post('/create', validate(createEventSchema), createEventController)
  *         description: Success
  */
 router.get('/', getEventsController)
+
+/**
+ * @openapi
+ * /api/events/{id}:
+ *   get:
+ *     summary: Get a single event
+ *     tags: [Events]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Event ID
+ *     responses:
+ *       200:
+ *         description: Success
+ *       404:
+ *         description: Event not found
+ */
+router.get('/:id', getEventController)
 
 export default router;

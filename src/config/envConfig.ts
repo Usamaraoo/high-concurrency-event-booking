@@ -7,14 +7,18 @@ interface Config {
     env: string;
     port: number;
     base_url: string;
-    jwt_secret:string;
-    salt_round:number
+    jwt_secret: string;
+    salt_round: number
+  }
+  stripe: {
+    secret_key: string;
+    webhook_secret: string;
   }
   seed: {
     user: {
       username: string;
       email: string;
-      password:string;
+      password: string;
     }
   }
   database: {
@@ -27,7 +31,7 @@ interface Config {
   redis: {
     host: string;
   }
- 
+
 }
 
 const getEnvVar = (key: string): string => {
@@ -47,6 +51,10 @@ const envConfig: Config = {
     jwt_secret: getEnvVar('JWT_SECRET'),
     salt_round: Number(getEnvVar('SALT_ROUND'))
   },
+  stripe: {
+    secret_key: getEnvVar('STRIPE_SECRET'),
+    webhook_secret: getEnvVar('STRIPE_WEBHOOK_SECRET'),
+  },
   database: {
     username: getEnvVar('DB_USERNAME'),
     password: getEnvVar('DB_PASSWORD'),
@@ -57,8 +65,8 @@ const envConfig: Config = {
   redis: {
     host: getEnvVar('REDIS_HOST'),
   },
-  seed:{
-    user:{
+  seed: {
+    user: {
       username: getEnvVar('SEED_USERNAME'),
       email: getEnvVar('SEED_USER_EMAIL'),
       password: getEnvVar('SEED_USER_PASSWORD'),

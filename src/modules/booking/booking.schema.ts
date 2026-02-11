@@ -10,17 +10,22 @@ export const reserveSeatsSchema = z
       .int()
       .positive("You must reserve at least 1 seat")
       .max(10, "You cannot reserve more than 10 seats at once"), // Optional cap
-      
+    eventPrice: z
+      .number()
+      .int()
+      .positive("You must reserve at least 1 seat")
+
+
   });
 
 
-export const createPaymentIntent = z
-  .object({
-    reservationToken: z
-      .string()
-      .uuid("Invalid reservation ID format"),
-
-  });
+// export const createPaymentIntentSchema = z.object({
+//   params: z.object({
+//     eventId: z
+//       .string()
+//       .uuid("Invalid event ID format"),
+//   })
+// });
 
 export type ReserveSeat = z.output<typeof reserveSeatsSchema>;
-export type CreatePaymentIntent = z.output<typeof createPaymentIntent>;
+// export type CreatePaymentIntent = z.output<typeof createPaymentIntentSchema>;

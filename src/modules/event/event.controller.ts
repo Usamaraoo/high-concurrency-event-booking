@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { createEvent, getEvents } from "./event.service";
+import { createEvent, getEvents, getEventById } from "./event.service";
 import { CreateEventOutput } from "./event.schema";
-import { sendSuccess } from "../../utils/response";
+import { sendSuccess, sendError } from "../../utils/response";
 import { asyncHandler } from "../../utils/asyncHandler";
 
 
@@ -12,7 +12,16 @@ export const createEventController = asyncHandler(async (req: Request<{}, {}, Cr
 });
 
 export const getEventsController = asyncHandler(async (req: Request, res: Response) => {
-    
+
     const events = await getEvents();
     return sendSuccess(res, events, 'Event created', 201);
+});
+
+export const getEventController = asyncHandler(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const event = await getEventById(id as string);
+    if (!event) {
+        return sendError(res, 'Event not found', 404);
+    }
+    return sendSuccess(res, event, 'Event found', 200);
 });
