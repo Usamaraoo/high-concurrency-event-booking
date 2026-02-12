@@ -5,7 +5,7 @@ import { sendSuccess } from "../../utils/response"
 
 export const reserveSeatController = asyncHandler(async (req: Request, res: Response) => {
     const user = req.user
-    const result = await reserveSeat(req.body, user?.id!)
+    const result = await reserveSeat(req.body, user?.id!, user?.email!)
     return sendSuccess(res, result, 'Seat reserved', 200);
 })
 

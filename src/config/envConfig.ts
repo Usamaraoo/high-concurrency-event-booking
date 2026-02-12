@@ -9,7 +9,15 @@ interface Config {
     base_url: string;
     jwt_secret: string;
     salt_round: number
-  }
+  },
+  mail: {
+    host: string;
+    port: number;
+    auth: {
+      user: string;
+      pass: string;
+    }
+  },
   stripe: {
     secret_key: string;
     webhook_secret: string;
@@ -50,6 +58,14 @@ const envConfig: Config = {
     port: Number(getEnvVar('PORT')) || 3000,
     jwt_secret: getEnvVar('JWT_SECRET'),
     salt_round: Number(getEnvVar('SALT_ROUND'))
+  },
+  mail: {
+    host: getEnvVar('MAIL_HOST'),
+    port: Number(getEnvVar('MAIL_PORT')),
+    auth: {
+      user: getEnvVar('MAIL_USER'),
+      pass: getEnvVar('MAIL_PASS'),
+    }
   },
   stripe: {
     secret_key: getEnvVar('STRIPE_SECRET'),

@@ -2,7 +2,7 @@ import envConfig from './config/envConfig';
 import app from './app';
 import { myDataSource } from './config/db/db';
 import { redisClient, startRedisExpirySubscriber } from './infra/redis';
-
+import './infra/queue/worker';
 
 export const initializeDataSource = async () => {
     try {

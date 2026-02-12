@@ -5,7 +5,7 @@ import { BookingStatus } from "./booking.entity";
 import { BookingRepository } from "./booking.repository";
 import { ReserveSeat } from "./booking.schema"
 
-export const reserveSeat = async (data: ReserveSeat, userId: string) => {
+export const reserveSeat = async (data: ReserveSeat, userId: string, email:string) => {
 
     const { eventId, seats, eventPrice } = data;
     // check if booking exists
@@ -15,7 +15,7 @@ export const reserveSeat = async (data: ReserveSeat, userId: string) => {
     }
     // create reservation
     const reservationToken = crypto.randomUUID();
-    const ttl = 60;
+    const ttl = 600;
 
     const reservationKey = `reservation:${eventId}:${seats}:${reservationToken}`;
     const eventKey = `event:available_seats:${eventId}`;
@@ -43,6 +43,7 @@ export const reserveSeat = async (data: ReserveSeat, userId: string) => {
         confirmed_at: null,
         price: total
     })
+     await BookingRepository.save(booking)
     // create payment intent 
     const intent = await stripe.paymentIntents.create({
         amount: total,
@@ -52,12 +53,14 @@ export const reserveSeat = async (data: ReserveSeat, userId: string) => {
             userId: userId,
             eventId: booking.event_id,
             seats: booking.seats,
-            price: booking.price
+            price: booking.price,
+            userEmail: email,
         }
     })
     booking.payment_intent_id = intent.id;
     booking.payment_intent_client_secret = intent.client_secret;
-    await BookingRepository.save(booking);
+     await BookingRepository.save(booking)
+   
     return booking;
 }
 
