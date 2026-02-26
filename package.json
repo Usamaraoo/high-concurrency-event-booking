@@ -11,7 +11,8 @@
     "migration:run": "npx typeorm-ts-node-commonjs migration:run -d src/config/db/db.ts",
     "migration:revert": "npx typeorm-ts-node-commonjs migration:revert -d src/config/db/db.ts",
     "stripe:listen": "stripe listen --forward-to http://localhost:4000/webhooks/stripe",
-    "seed": "ts-node src/config/db/seed.ts"
+    "seed": "ts-node src/config/db/seed.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",

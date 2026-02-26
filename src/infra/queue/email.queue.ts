@@ -1,5 +1,4 @@
 import { Queue } from 'bullmq';
-import envConfig from '../../config/envConfig';
 import {connection} from './index'
 
 // Create the queue instance
