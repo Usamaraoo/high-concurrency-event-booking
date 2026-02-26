@@ -3,8 +3,6 @@ import { auth } from "../../middleware/auth";
 import { getBookingByIdController, reserveSeatController } from "./booking.controller";
 import { validate } from "../../middleware/validate";
 import { reserveSeatsSchema } from "./booking.schema";
-import { stripeWebhookHandler } from "./booking.webhook";
-import express from "express";
 
 const router = Router()
 

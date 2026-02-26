@@ -212,3 +212,41 @@ JWT_SECRET=
 -   Expired reservations automatically restored
 -   Payment confirmation is safe and idempotent
 -   Email processing does not block API
+
+------------------------------------------------------------------------
+
+# 📁 Folder Structure
+
+```
+├── .dockerignore
+├── .env
+├── .env.docker
+├── .gitignore
+├── Dockerfile
+├── README.md
+├── dist
+├── docker-compose.yml
+├── env.example
+├── node_modules
+├── package-lock.json
+├── package.json
+├── src
+│   ├── app.ts
+│   ├── config
+│   ├── constant
+│   ├── infra
+│   │   ├── queue
+│   │   ├── redis
+│   │   └── stripe
+│   ├── middleware
+│   ├── migrations
+│   ├── modules
+│   │   ├── booking
+│   │   ├── event
+│   │   └── user
+│   ├── routes.ts
+│   ├── server.ts
+│   ├── types
+│   └── utils
+└── tsconfig.json
+```

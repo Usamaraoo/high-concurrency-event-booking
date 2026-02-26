@@ -1,5 +1,4 @@
 import { Worker, Job } from 'bullmq';
-import envConfig from '../../../config/envConfig';
 import {connection} from '../index'
 import { sendMail } from '../../../utils/sendMmail';
 

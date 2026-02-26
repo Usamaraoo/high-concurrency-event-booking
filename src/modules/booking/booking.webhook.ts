@@ -1,7 +1,6 @@
 import Stripe from "stripe";
 import stripe from "../../infra/stripe/stripe.client";
 import { Request, Response } from "express";
-import { BookingRepository } from "./booking.repository";
 import { BookingStatus } from "./booking.entity";
 import envConfig from "../../config/envConfig";
 import { redisClient } from "../../infra/redis";

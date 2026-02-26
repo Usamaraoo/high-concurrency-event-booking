@@ -8,6 +8,8 @@ export const globalErrorHandler = (
     res: Response,
     next: NextFunction
 ) => {
+    console.log(req)
+    console.log(next)
     console.error("Error Stack:", err.stack);
 
     const statusCode = err.statusCode || 500;

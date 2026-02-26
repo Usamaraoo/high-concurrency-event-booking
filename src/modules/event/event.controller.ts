@@ -12,7 +12,7 @@ export const createEventController = asyncHandler(async (req: Request<{}, {}, Cr
 });
 
 export const getEventsController = asyncHandler(async (req: Request, res: Response) => {
-
+    console.log(req)
     const events = await getEvents();
     return sendSuccess(res, events, 'Event created', 201);
 });
