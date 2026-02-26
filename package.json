@@ -12,7 +12,8 @@
     "migration:revert": "npx typeorm-ts-node-commonjs migration:revert -d src/config/db/db.ts",
     "stripe:listen": "stripe listen --forward-to http://localhost:4000/webhooks/stripe",
     "seed": "ts-node src/config/db/seed.ts",
-    "build": "tsc"
+    "build": "tsc && copyfiles -u 1 \"src/**/*.lua\" dist/",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,7 @@
     "@types/stripe": "^8.0.416",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
+    "copyfiles": "^2.4.1",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.2",
     "express": "^5.2.1",
