@@ -9,6 +9,7 @@ export const reserveSeatController = asyncHandler(async (req: Request, res: Resp
     return sendSuccess(res, result, 'Seat reserved', 200);
 })
 
+
 export const getBookingByIdController = asyncHandler(async (req: Request<{ bookingId: string }>, res: Response) => {
     const result = await getBookingById(req.params.bookingId)
     return sendSuccess(res, result, 'Booking found', 200);
