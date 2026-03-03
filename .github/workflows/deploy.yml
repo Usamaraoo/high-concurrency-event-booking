@@ -1,4 +1,31 @@
-deploy:
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          # Note the name: usamakaleem/hight-cun-booking
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hight-cun-booking:latest
+
+  deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
@@ -9,15 +36,12 @@ deploy:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # 1. Navigate to the folder you manually cloned
-            cd ~/event-booking || { echo "Folder not found! Did you run git clone?"; exit 1; }
-
-            # 2. Pull the latest code changes from GitHub
+            # Navigate to the folder (Created via manual 'git clone' on EC2)
+            cd ~/event-booking || { echo "Folder missing"; exit 1; }
+            
+            # Update code
             git pull origin main
-
-            # 3. Pull the NEW Docker image from Docker Hub
-            # Using hyphenated version to fix your 'unknown command' error
+            
+            # Pull new image and restart
             docker-compose pull
-
-            # 4. Restart the containers using your local .env.docker file
             docker-compose --env-file .env.docker up -d
